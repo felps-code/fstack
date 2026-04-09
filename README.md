@@ -1,6 +1,6 @@
 # fstack
 
-Hi, I'm Felps. I've been developing systems with Claude AI and I'm really into using [gstack](https://github.com/garrytan/gstack) and [Taskmaster](https://github.com/eyaltoledano/claude-task-master), so I decided to fill the gap between these two wonderful tools. gstack helps you plan while Taskmaster helps you manage tasks. With fstack I put these two worlds together and add the missing execution part — where Claude actually builds the code, task by task. Enjoy!
+Hi, I'm Felps. I've been developing systems with Claude AI and I'm really into using [gstack](https://github.com/garrytan/gstack) and [Taskmaster](https://github.com/eyaltoledano/claude-task-master), so I decided to fill the gap between these two wonderful tools. gstack helps you plan while Taskmaster helps you manage tasks. With fstack I put these two worlds together and add the missing execution part, where Claude actually builds the code, task by task. Enjoy!
 
 ---
 
