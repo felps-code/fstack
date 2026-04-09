@@ -49,7 +49,7 @@ npm install -g task-master-ai   # if not already installed
 cd ~/.claude/skills/fstack && git pull && ./setup
 ```
 
-## Usage with gstack
+## Usage with gstack (Highly Recommended)
 
 [gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Build → Review → Test → Ship → Reflect**. If you don't have it yet, check the [gstack README](https://github.com/garrytan/gstack#readme) for install instructions.
 
