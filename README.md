@@ -29,16 +29,22 @@ Two skills:
 
 ```bash
 # 1. Install gstack (if you don't have it)
-claude install-skill https://github.com/garrytan/gstack
+git clone https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
 
 # 2. Install fstack
-claude install-skill https://github.com/felps-code/fstack
+git clone https://github.com/felps-code/fstack.git ~/.claude/skills/fstack
+cd ~/.claude/skills && ln -s fstack/create-tasks create-tasks && ln -s fstack/execute-tasks execute-tasks
 
 # 3. Install Taskmaster CLI
 npm install -g task-master-ai
 ```
 
 Restart Claude Code after installing for skills to be discovered.
+
+To update later:
+```bash
+cd ~/.claude/skills/fstack && git pull
+```
 
 ## Usage with gstack
 
