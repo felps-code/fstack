@@ -27,23 +27,32 @@ Two skills:
 
 ## Installation
 
+Paste this into Claude Code:
+
+> Install fstack: run `git clone https://github.com/felps-code/fstack.git ~/.claude/skills/fstack && cd ~/.claude/skills/fstack && ./setup` — this adds /create-tasks and /execute-tasks skills for Taskmaster integration. Also install Taskmaster if not already installed: `npm install -g task-master-ai`
+
+That's it. Claude will clone the repo, run the setup script (creates symlinks), and check for Taskmaster. Restart Claude Code to use the new skills.
+
+### Manual installation
+
+If you prefer to do it yourself:
+
 ```bash
-# 1. Install gstack (if you don't have it)
-git clone https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
-
-# 2. Install fstack
 git clone https://github.com/felps-code/fstack.git ~/.claude/skills/fstack
-cd ~/.claude/skills && ln -s fstack/create-tasks create-tasks && ln -s fstack/execute-tasks execute-tasks
-
-# 3. Install Taskmaster CLI
-npm install -g task-master-ai
+cd ~/.claude/skills/fstack && ./setup
+npm install -g task-master-ai   # if not already installed
 ```
 
-Restart Claude Code after installing for skills to be discovered.
+### Install gstack too (recommended)
 
-To update later:
+fstack works best with [gstack](https://github.com/garrytan/gstack) for the full plan → build → ship workflow. If you don't have it, paste this into Claude Code:
+
+> Install gstack: run `git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup`
+
+### Update
+
 ```bash
-cd ~/.claude/skills/fstack && git pull
+cd ~/.claude/skills/fstack && git pull && ./setup
 ```
 
 ## Usage with gstack

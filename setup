@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# fstack setup — creates skill symlinks for Claude Code discovery
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILLS_DIR="$(dirname "$SCRIPT_DIR")"
+
+echo ""
+echo "  fstack — Taskmaster integration for Claude Code"
+echo "  ================================================"
+echo ""
+
+# Check task-master is installed
+if command -v task-master >/dev/null 2>&1; then
+  TM_VERSION=$(task-master --version 2>/dev/null || echo "unknown")
+  echo "  ✓ Taskmaster CLI found (v$TM_VERSION)"
+else
+  echo "  ⚠ Taskmaster CLI not found."
+  echo "    Install it with: npm install -g task-master-ai"
+  echo ""
+fi
+
+# Create skill symlinks
+SKILLS=(create-tasks execute-tasks)
+
+for SKILL in "${SKILLS[@]}"; do
+  TARGET="$SKILLS_DIR/$SKILL"
+  if [ -L "$TARGET" ]; then
+    # Remove existing symlink (might be stale)
+    rm -f "$TARGET"
+  fi
+  if [ -e "$TARGET" ]; then
+    echo "  ⚠ $TARGET already exists (not a symlink), skipping"
+  else
+    ln -s "fstack/$SKILL" "$TARGET"
+    echo "  ✓ Linked /$(echo $SKILL) skill"
+  fi
+done
+
+echo ""
+echo "  ✓ fstack installed! Restart Claude Code to use /create-tasks and /execute-tasks."
+echo ""
