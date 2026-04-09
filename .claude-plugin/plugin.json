@@ -1,0 +1,9 @@
+{
+  "name": "fstack",
+  "description": "Taskmaster integration skills for Claude Code. Converts engineering plans into structured tasks and executes them autonomously.",
+  "author": {
+    "name": "felps-code",
+    "url": "https://github.com/felps-code"
+  },
+  "version": "1.0.0"
+}
