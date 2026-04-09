@@ -43,12 +43,6 @@ cd ~/.claude/skills/fstack && ./setup
 npm install -g task-master-ai   # if not already installed
 ```
 
-### Install gstack too (recommended)
-
-fstack works best with [gstack](https://github.com/garrytan/gstack) for the full plan → build → ship workflow. If you don't have it, paste this into Claude Code:
-
-> Install gstack: run `git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup`
-
 ### Update
 
 ```bash
@@ -57,7 +51,7 @@ cd ~/.claude/skills/fstack && git pull && ./setup
 
 ## Usage with gstack
 
-[gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Build → Review → Test → Ship → Reflect**.
+[gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Build → Review → Test → Ship → Reflect**. If you don't have it yet, check the [gstack README](https://github.com/garrytan/gstack#readme) for install instructions.
 
 fstack plugs into the middle of that cycle. gstack handles the thinking, planning, reviewing, and shipping. fstack handles the structured execution — breaking the plan into tasks and implementing them one by one.
 
