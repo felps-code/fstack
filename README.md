@@ -36,34 +36,134 @@ npm install -g task-master-ai
 
 Restart Claude Code after installing for skills to be discovered.
 
-## Usage
+## Usage with gstack
 
-### The full workflow with gstack
+[gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Build → Review → Test → Ship → Reflect**.
+
+fstack plugs into the middle of that cycle. gstack handles the thinking, planning, reviewing, and shipping. fstack handles the structured execution — breaking the plan into tasks and implementing them one by one.
+
+### The gstack sprint cycle + fstack
+
+| Phase | Skill | Source |
+|-------|-------|--------|
+| **Think** | `/office-hours` — YC-style brainstorm, forcing questions that expose demand reality | gstack |
+| **Plan** | `/plan-ceo-review` — Challenge scope, find the 10-star product | gstack |
+| **Plan** | `/plan-eng-review` — Lock architecture, data flow, edge cases, test coverage | gstack |
+| **Plan** | `/plan-design-review` — Rate every design dimension 0-10 | gstack |
+| **Build** | `/create-tasks` — Convert the reviewed plan into Taskmaster tasks | **fstack** |
+| **Build** | `/execute-tasks` — Implement all tasks autonomously | **fstack** |
+| **Review** | `/review` — Pre-landing code review (SQL safety, trust boundaries) | gstack |
+| **Test** | `/qa` — Real browser testing, find and fix bugs | gstack |
+| **Ship** | `/ship` — Bump version, changelog, push, create PR | gstack |
+| **Ship** | `/land-and-deploy` — Merge PR, wait for CI, verify production | gstack |
+| **Reflect** | `/retro` — Weekly engineering retrospective | gstack |
+
+### Example: building a feature end-to-end
+
+Here's what a real session looks like — from idea to shipped PR:
 
 ```
-/plan-eng-review     →  Review your engineering plan (gstack)
-/create-tasks        →  Convert the reviewed plan into Taskmaster tasks (fstack)
-/execute-tasks       →  Implement all tasks autonomously (fstack)
-/ship                →  Create PR with all changes (gstack)
+You:  I want to add Stripe billing to my SaaS app
+
+      > /office-hours
+      
+      gstack asks 6 forcing questions: Who is desperate for this? What do
+      they do today? What's the narrowest possible wedge? You answer each
+      one. It sharpens the idea into a concrete scope.
+
+      > /plan-ceo-review
+
+      Rethinks the problem from first principles. Challenges premises.
+      Proposes a 10-star version. You pick HOLD SCOPE or expand selectively.
+
+      > /plan-eng-review
+
+      Locks the architecture: API routes, database schema, webhook handling,
+      error cases, test strategy. Walks through issues interactively.
+      You approve the plan.
+
+      > /create-tasks
+
+      fstack reads the approved plan, generates a PRD, runs Taskmaster:
+      
+      ✓ Generated PRD at .taskmaster/prd.md
+      ✓ Parsed into 8 tasks
+      ✓ Complexity analysis: 3 high, 4 medium, 1 low
+      ✓ Expanded into 23 subtasks
+      
+      | #  | Task                          | Priority | Complexity | Subtasks |
+      |----|-------------------------------|----------|------------|----------|
+      | 1  | Set up Stripe SDK + config    | high     | 3          | 3        |
+      | 2  | Create pricing plans schema   | high     | 5          | 4        |
+      | 3  | Build checkout flow           | high     | 7          | 5        |
+      | 4  | Implement webhook handler     | high     | 6          | 3        |
+      | 5  | Add subscription management   | medium   | 5          | 3        |
+      | 6  | Build billing portal page     | medium   | 4          | 2        |
+      | 7  | Add usage metering            | medium   | 4          | 2        |
+      | 8  | Write integration tests       | low      | 2          | 1        |
+      
+      "Review the task breakdown. Ready to execute?"
+      → You say: "Looks good"
+
+      > /execute-tasks
+
+      fstack starts the loop:
+      
+      Task #1: Set up Stripe SDK + config
+      → npm install stripe, creates lib/stripe.ts, adds env vars
+      → Tests pass ✓
+      → "Commit? (y/n)" → y
+      
+      Task #2: Create pricing plans schema  
+      → Reads existing DB schema, adds plans + subscriptions tables
+      → Runs migrations, seeds test data
+      → Tests pass ✓
+      → Committed.
+
+      Task #3: Build checkout flow
+      → Creates API route, builds React component, handles errors
+      → Tests fail (missing mock) → fixes mock → Tests pass ✓
+      → Committed.
+
+      ... (continues through all 8 tasks) ...
+
+      Progress: 8/8 tasks completed.
+      Files modified: 24 files across 6 directories.
+      "All tasks done! Run /ship to create a PR."
+
+      > /review
+
+      gstack reviews the full diff: SQL safety, trust boundaries,
+      conditional side effects. Auto-fixes what it can, asks you
+      about the rest.
+
+      > /qa
+
+      Opens a real browser, clicks through the checkout flow, tests
+      webhook handling, verifies the billing portal. Finds 2 bugs,
+      fixes them, re-verifies.
+
+      > /ship
+
+      Bumps VERSION, updates CHANGELOG, pushes to branch, creates PR.
+      Done.
 ```
 
-### Step 1: Plan (gstack)
+### Step by step
 
-Start with a plan. You can use gstack's planning skills or bring your own:
+#### Step 1: Think and plan (gstack)
+
+Start with `/office-hours` to brainstorm, then use the plan review skills to refine:
 
 ```
-> /plan-eng-review
+> /office-hours          # brainstorm the idea
+> /plan-ceo-review       # challenge scope
+> /plan-eng-review       # lock architecture
 ```
 
-This produces a reviewed engineering plan with architecture, implementation steps, and test strategy. Other gstack planning skills work too:
+Each skill is interactive — it asks questions, rates dimensions, makes recommendations. You approve or push back until the plan is solid. Or skip gstack entirely and provide your own plan file (`PLAN.md`, `DESIGN.md`, or paste it in).
 
-- `/plan-ceo-review` — CEO/founder scope review
-- `/plan-design-review` — designer's eye review
-- `/office-hours` — brainstorm the idea first
-
-Or skip gstack entirely and provide your own plan file (`PLAN.md`, `DESIGN.md`, or paste it in).
-
-### Step 2: Create tasks (fstack)
+#### Step 2: Create tasks (fstack)
 
 ```
 > /create-tasks
@@ -79,7 +179,7 @@ This skill:
 
 You can adjust tasks before moving on — add, remove, or modify tasks until the breakdown looks right.
 
-### Step 3: Execute tasks (fstack)
+#### Step 3: Execute tasks (fstack)
 
 ```
 > /execute-tasks
@@ -101,13 +201,13 @@ Handles errors automatically:
 
 **Resumable across sessions.** Task state lives in `.taskmaster/tasks/tasks.json`. If you stop mid-way, just run `/execute-tasks` again — it picks up where you left off.
 
-### Step 4: Ship (gstack)
+#### Step 4: Review, test, and ship (gstack)
 
 ```
-> /ship
+> /review       # code review the diff
+> /qa           # real browser testing
+> /ship         # bump version, push, create PR
 ```
-
-Creates a PR with all the changes from the executed tasks.
 
 ## Using without gstack
 
