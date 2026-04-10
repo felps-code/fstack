@@ -51,9 +51,9 @@ cd ~/.claude/skills/fstack && git pull && ./setup
 
 ## Usage with gstack (Highly Recommended)
 
-[gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Build → Review → Test → Ship → Reflect**. If you don't have it yet, check the [gstack README](https://github.com/garrytan/gstack#readme) for install instructions.
+[gstack](https://github.com/garrytan/gstack) is an open source software factory by Garry Tan that turns Claude Code into a virtual engineering team — 23 specialist skills organized around a sprint cycle: **Think → Plan → Review → Test → Ship → Reflect**. If you don't have it yet, check the [gstack README](https://github.com/garrytan/gstack#readme) for install instructions.
 
-fstack plugs into the middle of that cycle. gstack handles the thinking, planning, reviewing, and shipping. fstack handles the structured execution — breaking the plan into tasks and implementing them one by one.
+fstack plugs into the middle of that cycle. gstack handles the thinking, planning, reviewing, and shipping. fstack handles the structured execution, breaking the plan into tasks and implementing them one by one.
 
 ### The gstack sprint cycle + fstack
 
